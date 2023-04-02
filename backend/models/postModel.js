@@ -24,6 +24,13 @@ const PostSchema = new Schema({
     default: "Uncategorized",
   },
 
+  status: {
+    type: String,
+    required: true,
+    enum: ["Published", "Unpublished"],
+    default: "Unpublished",
+  },
+
   content: {
     type: String,
     required: true,
