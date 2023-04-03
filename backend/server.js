@@ -6,9 +6,8 @@ const categoryRoutes = require("./routes/categoryRoutes");
 
 const PORT = 3005;
 
-app.get("/api/home", (req, res) => {
-  res.send("<h2>Hello</h2>");
-});
+//Accept json data
+app.use(express.json());
 
 //App routes
 app.use("/api/posts", postRoutes);
