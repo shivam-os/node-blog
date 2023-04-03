@@ -10,6 +10,6 @@ const userController = require("../controllers/userController");
 router.post("/signup", userController.signup);
 
 //POST method to login an existing user
-router.post("/signup", userController.signin);
+router.post("/signin", userController.signin);
 
 module.exports = router;
