@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const categoryController = require("../controllers/categoryController");
 const categoryValidator = require("../middlewares/categoryValidator");
 
@@ -17,6 +18,7 @@ router.get("/:categoryName", categoryController.getCategoryPosts);
 //POST method to create a new category
 router.post(
   "/create",
+  passport.authenticate("jwt", { session: false }),
   categoryValidator.createCategory,
   categoryController.createCategory
 );
@@ -24,11 +26,16 @@ router.post(
 //PUT method to update an existing category with given id
 router.put(
   "/:id",
+  passport.authenticate("jwt", { session: false }),
   categoryValidator.createCategory,
   categoryController.updateCategory
 );
 
 //DELETE method to delete an existing category with given id
-router.delete("/:id", categoryController.deleteCategory);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  categoryController.deleteCategory
+);
 
 module.exports = router;
