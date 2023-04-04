@@ -1,5 +1,7 @@
+require("dotenv").config();
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 /*
@@ -73,6 +75,14 @@ exports.signin = async (req, res) => {
         .status(400)
         .json({ err: "Incorrect email or password! Please try again." });
     }
+
+    //If password matches then assign a jwt & send it
+    const payload = { userId: existingUser._id };
+    const bearerToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+
+    return res.status(201).json({ token: "Bearer " + bearerToken });
   } catch (err) {
     console.log(err);
     return res

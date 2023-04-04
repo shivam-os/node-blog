@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport")
 const postController = require("../controllers/postController");
+const commentValidator = require("../middlewares/commentValidator");
+const postValidator = require("../middlewares/postValidator");
 
 /*
 ------ Public Routes ------
@@ -13,17 +16,21 @@ router.get("/", postController.getPosts);
 router.get("/:id", postController.getSinglePost);
 
 //POST method to add a comment to a post with given id
-router.post("/:id/comment", postController.addComment);
+router.post(
+  "/:id/comment",
+  commentValidator.createComment,
+  postController.addComment
+);
 
 /*
 ------ Protected Routes ------
 */
 
 //POST method to get create a post
-router.post("/create", postController.createPost);
+router.post("/create", passport.authenticate("jwt", {session: false}), postValidator.createPost, postController.createPost);
 
 //PUT method to update a post with given id
-router.put("/:id", postController.updatePost);
+router.put("/:id", postValidator.createPost, postController.updatePost);
 
 //DELETE method to delete a post with given id
 router.delete("/:id", postController.deletePost);
