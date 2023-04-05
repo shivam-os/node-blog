@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const fileUpload = require("express-fileupload");
+const cors = require("cors");
 const passport = require("passport");
 require("./config/passport")(passport);
 const postRoutes = require("./routes/postRoutes");
@@ -14,6 +14,7 @@ const PORT = 3005;
 connectDB();
 
 //Accept req data
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

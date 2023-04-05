@@ -10,8 +10,14 @@ const Comment = require("../models/commentModel");
 */
 
 //GET method to get all posts
-exports.getPosts = (req, res) => {
-  res.send("Not implemented!");
+exports.getPosts = async(req, res) => {
+  try {
+    const posts = await Post.find({status: "Published"}).populate("author category", "name")
+    return res.status(200).json({posts: posts})
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({err: "Couldn't retreive posts from database! Please try again later."})
+  }
 };
 
 //GET method to get a single post with given id
