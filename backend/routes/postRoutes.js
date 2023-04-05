@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport")
+const upload = require("../config/multer");
+const passport = require("passport");
 const postController = require("../controllers/postController");
 const commentValidator = require("../middlewares/commentValidator");
 const postValidator = require("../middlewares/postValidator");
+const getDataUri = require("../config/datauri");
 
 /*
 ------ Public Routes ------
@@ -22,12 +24,24 @@ router.post(
   postController.addComment
 );
 
+router.post("/upload", upload, (req, res) => {
+  const file = req.file;
+  const fileUri = getDataUri(file);
+  console.log("req.file: ", req.file);
+});
+
 /*
 ------ Protected Routes ------
 */
 
 //POST method to get create a post
-router.post("/create", passport.authenticate("jwt", {session: false}), postValidator.createPost, postController.createPost);
+router.post(
+  "/create",
+  passport.authenticate("jwt", { session: false }),
+  upload,
+  postValidator.createPost,
+  postController.createPost
+);
 
 //PUT method to update a post with given id
 router.put("/:id", postValidator.createPost, postController.updatePost);

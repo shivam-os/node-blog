@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const fileUpload = require("express-fileupload");
 const passport = require("passport");
 require("./config/passport")(passport);
 const postRoutes = require("./routes/postRoutes");
@@ -12,8 +13,9 @@ const PORT = 3005;
 //Connect to the database
 connectDB();
 
-//Accept json data
+//Accept req data
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Passport middlewares
 app.use(passport.initialize());

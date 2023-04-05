@@ -27,7 +27,7 @@ exports.createPost = [
     .trim()
     .not()
     .isEmpty()
-    .withMessage("Author field cannot be empty!")
+    .withMessage("Status field cannot be empty!")
     .isIn(["Unpublished", "Published"])
     .withMessage("Status field contains invalid values!"),
 

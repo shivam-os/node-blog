@@ -16,7 +16,12 @@ const PostSchema = new Schema({
   },
 
   featuredImage: {
-    type: String,
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
   },
 
   category: {
